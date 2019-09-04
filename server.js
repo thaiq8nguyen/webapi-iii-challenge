@@ -11,8 +11,8 @@ server.use("/api/users", logger, userRouter);
 server.use("/api/posts", logger, postRouter);
 
 // MOTD
-server.use("/motd", (req, res) => {
-  res.json({ message: process.env.MOTD });
+server.use("/", (req, res) => {
+  res.json({ message: "Hello from Heroku" });
 });
 
 server.listen(PORT, () => {
