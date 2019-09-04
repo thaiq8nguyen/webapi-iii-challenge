@@ -1,15 +1,22 @@
-const express = 'express';
+const express = require("express");
+const logger = require("./middleware/logger");
 
+const userRouter = require("./users/userRouter");
+const postRouter = require("./posts/postRouter");
+const PORT = process.env.PORT;
 const server = express();
+server.use(express.json());
 
-server.get('/', (req, res) => {
-  res.send(`<h2>Let's write some middleware!</h2>`)
+server.use("/api/users", logger, userRouter);
+server.use("/api/posts", logger, postRouter);
+
+// MOTD
+server.use("/motd", (req, res) => {
+  res.json({ message: process.env.MOTD });
 });
 
-//custom middleware
-
-function logger(req, res, next) {
-
-};
+server.listen(PORT, () => {
+  console.log(`--Server is listening on ${PORT}--`);
+});
 
 module.exports = server;
