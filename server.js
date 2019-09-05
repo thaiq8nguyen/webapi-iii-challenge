@@ -8,8 +8,10 @@ const postRouter = require("./posts/postRouter");
 const PORT = process.env.PORT;
 const server = express();
 server.use(express.json());
-//server.use(cors());
-//server.use(express.static(path.join(__dirname, "client/public")));
+
+if (process.env.NODE_ENV === "production") {
+  server.use(express.static(path.join(__dirname, "client/build")));
+}
 
 server.use("/api/users", logger, userRouter);
 server.use("/api/posts", logger, postRouter);
